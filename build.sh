@@ -20,7 +20,7 @@ rpm -ivh erlang-18.3.4.1-1.fc25.src.rpm
 
 sudo yum-builddep -y ~/rpmbuild/SRPMS/erlang-18.3.4.1-1.fc25.src.rpm
 
-rpmbuild -ba ~/rpmbuild/SPECS/erlang-18.3.4.1-1.fc25.src.rpm
+rpmbuild -ba ~/rpmbuild/SPECS/erlang.spec
 sudo yum localinstall -y ~/rpmbuild/RPMS/*/erlang*
 
 # build elixir rpm
