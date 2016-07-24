@@ -42,6 +42,7 @@ export LANG=en_US.UTF-8
 make clean compile
 
 %check
+export LANG=en_US.UTF-8 
 make test 
 
 %install
@@ -61,6 +62,9 @@ ln -s %{_datadir}/%{name}/%{version}/bin/{elixir,elixirc,iex,mix} %{buildroot}/%
 
 
 %changelog
+
+* Sun Jul 24 2016 Yutaka Nishimura <ytk.nishimura@gmail.com> - 1.3.1-3
+- Fix support el6
 
 * Sat Jul 23 2016 Yutaka Nishimura <ytk.nishimura@gmail.com> - 1.3.1-2
 - Support CentOS with el 
