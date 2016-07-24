@@ -1,0 +1,48 @@
+From 8c34a2dc70070cca8d97ad3c0f2dfbec1a0d82d8 Mon Sep 17 00:00:00 2001
+From: Sverker Eriksson <sverker@erlang.org>
+Date: Thu, 15 Mar 2012 16:42:40 +0100
+Subject: [PATCH] erts: Fix memory corruption when reading topology info
+
+If the number of processors actually found while reading sysfs
+is lower than the configured value, we realloc() the cpuinfo array
+to the smaller size, but we then iterate it using the original
+configured size, thus corrupting memory beyond the allocated
+block.
+---
+ erts/lib_src/common/erl_misc_utils.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/erts/lib_src/common/erl_misc_utils.c b/erts/lib_src/common/erl_misc_utils.c
+index 4806311..162c908 100644
+--- a/erts/lib_src/common/erl_misc_utils.c
++++ b/erts/lib_src/common/erl_misc_utils.c
+@@ -727,7 +727,7 @@ struct erts_cpu_info_t_ {
+ 
+ 	prev = NULL;
+ 	this = &cpuinfo->topology[0];
+-	last = &cpuinfo->topology[cpuinfo->configured-1];
++	last = &cpuinfo->topology[cpuinfo->topology_size-1];
+ 	while (1) {
+ 	    if (processor == this->processor) {
+ 		if (node != this->node)
+@@ -939,7 +939,7 @@ struct erts_cpu_info_t_ {
+ 
+ 	if (res > 1) {
+ 	    prev = this++;
+-	    last = &cpuinfo->topology[cpuinfo->configured-1];
++	    last = &cpuinfo->topology[cpuinfo->topology_size-1];
+ 
+ 	    while (1) {
+ 		this->thread = ((this->node == prev->node
+@@ -1094,7 +1094,7 @@ struct erts_cpu_info_t_ {
+ 
+ 	if (res > 1) {
+ 	    prev = this++;
+-	    last = &cpuinfo->topology[cpuinfo->configured-1];
++	    last = &cpuinfo->topology[cpuinfo->topology_size-1];
+ 
+ 	    while (1) {
+ 		this->thread = ((this->node == prev->node
+-- 
+1.8.4
+

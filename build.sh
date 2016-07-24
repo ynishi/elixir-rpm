@@ -18,10 +18,11 @@ curl -OL http://dl.fedoraproject.org/pub/epel/6/SRPMS/erlang-R14B-04.3.el6.src.r
 sudo yum-builddep -y --nogpgcheck ~/rpmbuild/SRPMS/erlang-R14B-04.3.el6.src.rpm
 rpm -ivh erlang-R14B-04.3.el6.src.rpm
 
-cd ~/rpmbuild/SOURCES
-git clone http://pkgs.fedoraproject.org/git/rpms/erlang.git
-cd erlang
-cp otp-*.patch ~/rpmbuild/SOURCES
+cp SOURCES/*.patch ~/rpmbuild/SOURCES
+#cd ~/rpmbuild/SOURCES
+#git clone http://pkgs.fedoraproject.org/git/rpms/erlang.git
+#cd erlang
+#cp otp-*.patch ~/rpmbuild/SOURCES
 
 curl -OL https://github.com/erlang/otp/archive/OTP-18.3.4.1/otp-OTP-18.3.4.1.tar.gz
 
