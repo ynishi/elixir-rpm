@@ -23,5 +23,5 @@ And you can use Phoenix.
 ```
 $ mix local.hex
 $ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
-$ mix phoenix.new web --no-branch --no-exto
+$ mix phoenix.new web --no-brunch --no-ecto
 ```
